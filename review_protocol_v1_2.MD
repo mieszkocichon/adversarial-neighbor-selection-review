@@ -216,4 +216,32 @@ Papers that the search **must** find. They are used to check query sensitivity; 
 |---|---|---|
 | 2026-09-24 | D1–D3 executed: D1 = 219, D2 = 697, D3 = 146 records (1062 rows in total); after deduplication by EID, 1034 records. **[correction]** 27 records appeared in more than one query (one in three), hence 28 removed rows. In addition, 8 records form 4 pairs with identical titles and different EIDs – possible duplicates in Scopus, resolved as X5. | Record of search results (not a deviation). |
 | 2026-09-24 | Control set: 11 of 12 items found. Missing: "User Isolation Poisoning on Decentralized Federated Learning". Queries were **not** changed. | The paper contains no terms related to topology or neighborhood. The abstract indicates that the attack manipulates model updates rather than the neighbor set, so listing it in the control set was probably a mistake. Final assessment: stage 2 or snowballing. |
-| 2026-09-24 | AI screening (second reviewer) performed **before** the author's screening. The key file was secured with SHA-256 hash: `c64b6ab40ca836f886fdbdb89c220c0e0e7423b2ff322793fbbbb839af
+| 2026-09-24 | AI screening (second reviewer) performed **before** the author's screening. The key file was secured with SHA-256 hash: `c64b6ab40ca836f886fdbdb89c220c0e0e7423b2ff322793fbbbb839aff4df6e`. | Proof of independence: the author can verify that the key did not change after his assessments (`sha256sum klucz_AI_etap1.csv`). |
+| 2026-09-24 | **Correction of the control-set entry:** "User isolation poisoning" was restored to the control set as **missing** (sensitivity 11/12). The previous justification was withdrawn. | Removing an item after seeing the result would look like fitting the criterion to the result. |
+| 2026-09-24 | **AI key v1 withdrawn** (hash `c64b6ab4…4df6e`). The author had not opened it and had not started screening. It will be replaced by key v2 with an individual assessment of every record. | Key v1 was partly based on keyword rules, so kappa would measure agreement with a rule rather than with a reviewer. |
+| 2026-09-24 | **Amendment v1.1:** new wording of RQ4 (H1–H3), split of A4 and A5, W/P labels, scope boundaries, reference model and citation-matching procedure. | The citation pilot showed that the v1.0 hypothesis is false for D2. Changes made before the author's screening. |
+| 2026-09-24 | Disclosure: citation pilot on 8 papers before v1.1. | Influenced the wording of RQ4; to be reported in the methodology. |
+| 2026-09-24 | Audit of the code and article of stage 1: decisions keyed by EID, no default classification values, numbers generated from data; EID column in the screening spreadsheet; corrected author names in the bibliography. | A result produced by a default value in code (RQ1 of stage 1) and decisions dependent on row order were detected (ERRATA.md, items 1–2). |
+| 2026-09-24 | **AI key v2 completed:** 1034 records, each assessed individually on the basis of title and abstract (10 batches), decisions keyed by EID and validated with `screening_lib.py`. File `klucz_AI_v2.csv` (sorted by EID), SHA-256: `6b770171ad49b35d14ef2a443110e375ad1febbb8e17f1c7412dc2018f14de34`. | Commitment before the author's screening; hash to be published with an independent timestamp. |
+| 2026-09-24 | **Correction of the description of AI key v2:** decisions were made on the basis of the title and the **opening part of the abstract (approx. 220–480 characters)**, not the full abstract (median abstract length: approx. 1400 characters). The previous entry ("on the basis of title and abstract") was imprecise. | Audit; limitation reported in the methodology. The "when in doubt, include" rule partly mitigates it; its impact will be assessed by kappa and the review of disagreements. |
+| 2026-09-24 | **AI key v2 replaced by key v2.1** (`klucz_AI_v2_1.csv`, SHA-256: `02ba138ff84387732d847c91648ad0da5082b7f7ffe63a563d58ac9ebd0b8072`). Decisions and codes identical to v2; only 14 notes were changed, in which references to position numbers were replaced by EIDs. Key v2 (`6b770171…4de34`) archived. | References to position numbers were not reproducible (the same error as in stage 1). Change made before publication of the protocol and before the author's screening. |
+| 2026-09-24 | Author's screening spreadsheet: full abstracts restored in 3 records (previously truncated to 3000 characters) and full author lists; column N added with possible duplicates (same title, different EIDs); rule for reputation-based peer selection clarified. | Audit. The author had not started screening. |
+| 2026-09-24 | Library `screening_lib.py`: blocking of silent decision overwrites, validation of a code on inclusion, reporting of missing values in kappa, duplicate detection by title/DOI, portable temporary files in the self-test. | Code audit. |
+| 2026-09-24 | **Amendment v1.2** (before publication of the protocol and the author's screening): joint-exclusion check with a decision rule; three new extraction fields; clarification of deduplication and of the AI-key description in Section 6. | Remaining risk after the audit: an AI key based on abstract fragments may contribute to undetected joint false exclusions. Extraction fields needed for the common abstraction and RQ4. Changes do not affect the eligibility criteria. |
+
+## 12. Changes in version 1.1 (summary)
+
+1. RQ4: the hypothesis of "independent discovery in three domains" replaced by a hypothesis of asymmetric knowledge transfer (H1: D2 adopted knowledge from D1; H2: D3 did not).
+2. Attack classes: A4 → A4a/A4b, A5 → A5a/A5b, W/P threat-model label.
+3. Scope-boundaries table (aggregation, BGP, identity-level Sybil, Tor, PCNs, ML detection).
+4. Citation analysis: reference model, matching by DOI/title, qualitative analysis, Fisher's exact test.
+5. Control set: a missing item is reported as missing (11/12).
+6. AI screening: individual assessment of records, key v2, publication of the hash with an independent timestamp.
+7. Explicit disclosure of data exposure before v1.0 and v1.1.
+
+## 13. Changes in version 1.2 (summary)
+
+1. Joint-exclusion check: sample max(10%, 73), seed 20260924, Wilson interval, full review if the upper bound exceeds 5% (Section 6, item 7).
+2. New extraction fields: element of the common abstraction, adversary goal, counterpart of the defense in another domain, location in the full text (Section 7).
+3. Clarification of deduplication (EID + flagging duplicates by title/DOI) and of the basis of AI-key decisions (Section 6).
+4. Eligibility criteria **unchanged** relative to v1.1.
